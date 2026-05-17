@@ -1,0 +1,65 @@
+﻿@model BarangayCensus.Models.AddResidentViewModel
+@{
+    ViewData["Title"] = "Add Resident";
+}
+<h2>Add New Resident</h2>
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="FirstName" class="form-label"></label>
+        <input asp-for="FirstName" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="MiddleName"></label>
+        <input asp-for="MiddleName" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="DateOfBirth"></label>
+        <input asp-for="DateOfBirth" type="date" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Gender"></label>
+        <select asp-for="Gender" class="form-select">
+            <option>Male</option>
+            <option>Female</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label asp-for="CivilStatus"></label>
+        <select asp-for="CivilStatus" class="form-select">
+            <option>Single</option>
+            <option>Married</option>
+            <option>Widowed</option>
+            <option>Separated</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Address"></label>
+        <input asp-for="Address" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="ContactNumber"></label>
+        <input asp-for="ContactNumber" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Occupation"></label>
+        <input asp-for="Occupation" class="form-control" />
+    </div>
+    <div class="form-check mb-2">
+        <input asp-for="IsVoter" class="form-check-input" type="checkbox" />
+        <label asp-for="IsVoter" class="form-check-label">Registered Voter</label>
+    </div>
+    <div class="form-check mb-2">
+        <input asp-for="IsPWD" class="form-check-input" type="checkbox" />
+        <label asp-for="IsPWD" class="form-check-label">PWD</label>
+    </div>
+    <div class="form-check mb-3">
+        <input asp-for="IsSeniorCitizen" class="form-check-input" type="checkbox" />
+        <label asp-for="IsSeniorCitizen" class="form-check-label">Senior Citizen</label>
+    </div>
+    <button type="submit" class="btn btn-success">Save Resident</button>
+    <a asp-action="List" class="btn btn-secondary">Cancel</a>
+</form>

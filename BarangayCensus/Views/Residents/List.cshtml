@@ -1,0 +1,41 @@
+﻿@model List<BarangayCensus.Models.Entities.Resident>
+@{
+    ViewData["Title"] = "Census List";
+}
+<h2>Barangay Residents</h2>
+<a asp-action="Add" class="btn btn-success mb-3">+ Add Resident</a>
+<table class="table table-bordered table-hover">
+    <thead class="table-success">
+        <tr>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Address</th>
+            <th>Contact</th>
+            <th>Voter</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.LastName, @r.FirstName @r.MiddleName</td>
+                <td>@r.Gender</td>
+                <td>@r.Address</td>
+                <td>@r.ContactNumber</td>
+                <td>@(r.IsVoter ? "Yes" : "No")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@r.Id"
+                       class="btn btn-sm btn-warning">Edit</a>
+                    <form asp-action="Delete" asp-controller="Residents" method="post" style="display:inline">
+                        <input type="hidden" name="id" value="@r.Id" />
+                        <button type="submit" class="btn btn-sm btn-danger"
+                                onclick="return confirm('Delete this record?')">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
