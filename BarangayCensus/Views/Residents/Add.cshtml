@@ -2,64 +2,94 @@
 @{
     ViewData["Title"] = "Add Resident";
 }
-<h2>Add New Resident</h2>
-<form method="post">
-    <div class="mb-3">
-        <label asp-for="FirstName" class="form-label"></label>
-        <input asp-for="FirstName" class="form-control" />
+
+<div style="max-width:700px; margin:0 auto;">
+    <div style="margin-bottom:24px;">
+        <h2 style="color:#1a2e1f; font-weight:600; font-size:1.5rem; margin-bottom:4px;">Add New Resident</h2>
+        <p style="color:#4a6352; font-size:14px;">Fill in the resident information below.</p>
     </div>
-    <div class="mb-3">
-        <label asp-for="LastName"></label>
-        <input asp-for="LastName" class="form-control" />
+
+    <div style="background:white; border:1px solid #d0e8d5; border-radius:10px; padding:32px;">
+        <form method="post">
+
+            <p style="font-size:11px; font-weight:600; color:#1B6B2F; text-transform:uppercase; letter-spacing:.08em; margin-bottom:16px;">Personal Information</p>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-bottom:16px;">
+                <div>
+                    <label style="font-size:12px; color:#4a6352; display:block; margin-bottom:5px;">First Name</label>
+                    <input asp-for="FirstName" class="form-control" style="border-color:#d0e8d5; font-size:13px;" />
+                </div>
+                <div>
+                    <label style="font-size:12px; color:#4a6352; display:block; margin-bottom:5px;">Last Name</label>
+                    <input asp-for="LastName" class="form-control" style="border-color:#d0e8d5; font-size:13px;" />
+                </div>
+                <div>
+                    <label style="font-size:12px; color:#4a6352; display:block; margin-bottom:5px;">Middle Name</label>
+                    <input asp-for="MiddleName" class="form-control" style="border-color:#d0e8d5; font-size:13px;" />
+                </div>
+                <div>
+                    <label style="font-size:12px; color:#4a6352; display:block; margin-bottom:5px;">Date of Birth</label>
+                    <input asp-for="DateOfBirth" type="date" class="form-control" style="border-color:#d0e8d5; font-size:13px;" />
+                </div>
+                <div>
+                    <label style="font-size:12px; color:#4a6352; display:block; margin-bottom:5px;">Gender</label>
+                    <select asp-for="Gender" class="form-select" style="border-color:#d0e8d5; font-size:13px;">
+                        <option value="">Select...</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="font-size:12px; color:#4a6352; display:block; margin-bottom:5px;">Civil Status</label>
+                    <select asp-for="CivilStatus" class="form-select" style="border-color:#d0e8d5; font-size:13px;">
+                        <option value="">Select...</option>
+                        <option>Single</option>
+                        <option>Married</option>
+                        <option>Widowed</option>
+                        <option>Separated</option>
+                    </select>
+                </div>
+            </div>
+
+            <p style="font-size:11px; font-weight:600; color:#1B6B2F; text-transform:uppercase; letter-spacing:.08em; margin-bottom:16px;">Contact & Location</p>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+                <div style="grid-column:span 2;">
+                    <label style="font-size:12px; color:#4a6352; display:block; margin-bottom:5px;">Address</label>
+                    <input asp-for="Address" class="form-control" placeholder="Purok, Zone, Street" style="border-color:#d0e8d5; font-size:13px;" />
+                </div>
+                <div>
+                    <label style="font-size:12px; color:#4a6352; display:block; margin-bottom:5px;">Contact Number</label>
+                    <input asp-for="ContactNumber" class="form-control" placeholder="09XXXXXXXXX" style="border-color:#d0e8d5; font-size:13px;" />
+                </div>
+                <div>
+                    <label style="font-size:12px; color:#4a6352; display:block; margin-bottom:5px;">Occupation</label>
+                    <input asp-for="Occupation" class="form-control" placeholder="e.g. Farmer, Teacher" style="border-color:#d0e8d5; font-size:13px;" />
+                </div>
+            </div>
+
+            <p style="font-size:11px; font-weight:600; color:#1B6B2F; text-transform:uppercase; letter-spacing:.08em; margin-bottom:16px;">Classifications</p>
+
+            <div style="display:flex; gap:24px; margin-bottom:28px;">
+                <label style="display:flex; align-items:center; gap:7px; font-size:13px; color:#4a6352; cursor:pointer;">
+                    <input asp-for="IsVoter" type="checkbox" style="accent-color:#1B6B2F; width:15px; height:15px;" /> Registered Voter
+                </label>
+                <label style="display:flex; align-items:center; gap:7px; font-size:13px; color:#4a6352; cursor:pointer;">
+                    <input asp-for="IsPWD" type="checkbox" style="accent-color:#1B6B2F; width:15px; height:15px;" /> PWD
+                </label>
+                <label style="display:flex; align-items:center; gap:7px; font-size:13px; color:#4a6352; cursor:pointer;">
+                    <input asp-for="IsSeniorCitizen" type="checkbox" style="accent-color:#1B6B2F; width:15px; height:15px;" /> Senior Citizen
+                </label>
+            </div>
+
+            <div style="display:flex; gap:8px; padding-top:20px; border-top:1px solid #f0f7f2;">
+                <button type="submit" style="background:#1B6B2F; color:white; border:none; padding:10px 24px; border-radius:8px; font-size:13px; font-weight:500; cursor:pointer;">
+                    Save Resident
+                </button>
+                <a asp-action="List" style="background:#f8f9fa; color:#4a6352; border:1px solid #d0e8d5; padding:10px 20px; border-radius:8px; font-size:13px; text-decoration:none;">
+                    Cancel
+                </a>
+            </div>
+        </form>
     </div>
-    <div class="mb-3">
-        <label asp-for="MiddleName"></label>
-        <input asp-for="MiddleName" class="form-control" />
-    </div>
-    <div class="mb-3">
-        <label asp-for="DateOfBirth"></label>
-        <input asp-for="DateOfBirth" type="date" class="form-control" />
-    </div>
-    <div class="mb-3">
-        <label asp-for="Gender"></label>
-        <select asp-for="Gender" class="form-select">
-            <option>Male</option>
-            <option>Female</option>
-        </select>
-    </div>
-    <div class="mb-3">
-        <label asp-for="CivilStatus"></label>
-        <select asp-for="CivilStatus" class="form-select">
-            <option>Single</option>
-            <option>Married</option>
-            <option>Widowed</option>
-            <option>Separated</option>
-        </select>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Address"></label>
-        <input asp-for="Address" class="form-control" />
-    </div>
-    <div class="mb-3">
-        <label asp-for="ContactNumber"></label>
-        <input asp-for="ContactNumber" class="form-control" />
-    </div>
-    <div class="mb-3">
-        <label asp-for="Occupation"></label>
-        <input asp-for="Occupation" class="form-control" />
-    </div>
-    <div class="form-check mb-2">
-        <input asp-for="IsVoter" class="form-check-input" type="checkbox" />
-        <label asp-for="IsVoter" class="form-check-label">Registered Voter</label>
-    </div>
-    <div class="form-check mb-2">
-        <input asp-for="IsPWD" class="form-check-input" type="checkbox" />
-        <label asp-for="IsPWD" class="form-check-label">PWD</label>
-    </div>
-    <div class="form-check mb-3">
-        <input asp-for="IsSeniorCitizen" class="form-check-input" type="checkbox" />
-        <label asp-for="IsSeniorCitizen" class="form-check-label">Senior Citizen</label>
-    </div>
-    <button type="submit" class="btn btn-success">Save Resident</button>
-    <a asp-action="List" class="btn btn-secondary">Cancel</a>
-</form>
+</div>

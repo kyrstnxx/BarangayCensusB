@@ -1,0 +1,20 @@
+﻿@page "/Identity/Account/Logout"
+@model BarangayCensus.Areas.Identity.Pages.Account.LogoutModel
+@{
+    ViewData["Title"] = "Logged out";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<div style="min-height:80vh; display:flex; align-items:center; justify-content:center; background:#f4f7f5;">
+    <div style="background:white; border-radius:12px; border:1px solid #d0e8d5; padding:40px; width:100%; max-width:420px; text-align:center;">
+        <div style="width:60px; height:60px; background:#d4edda; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 16px;">
+            <span style="font-size:24px;">✅</span>
+        </div>
+        <h2 style="color:#1B6B2F; font-weight:600; margin-bottom:8px;">Logged out</h2>
+        <p style="color:#6c757d; font-size:14px; margin-bottom:24px;">You have successfully logged out.</p>
+        <a asp-area="Identity" asp-page="/Account/Login"
+           style="background:#1B6B2F; color:white; padding:12px 32px; border-radius:8px; text-decoration:none; font-size:14px; font-weight:500;">
+            Log back in
+        </a>
+    </div>
+</div>

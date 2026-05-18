@@ -1,41 +1,91 @@
 ﻿@model List<BarangayCensus.Models.Entities.Resident>
 @{
-    ViewData["Title"] = "Census List";
+    ViewData["Title"] = "Census Records";
 }
-<h2>Barangay Residents</h2>
-<a asp-action="Add" class="btn btn-success mb-3">+ Add Resident</a>
-<table class="table table-bordered table-hover">
-    <thead class="table-success">
-        <tr>
-            <th>Name</th>
-            <th>Gender</th>
-            <th>Address</th>
-            <th>Contact</th>
-            <th>Voter</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var r in Model)
-        {
-            <tr>
-                <td>@r.LastName, @r.FirstName @r.MiddleName</td>
-                <td>@r.Gender</td>
-                <td>@r.Address</td>
-                <td>@r.ContactNumber</td>
-                <td>@(r.IsVoter ? "Yes" : "No")</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@r.Id"
-                       class="btn btn-sm btn-warning">Edit</a>
-                    <form asp-action="Delete" asp-controller="Residents" method="post" style="display:inline">
-                        <input type="hidden" name="id" value="@r.Id" />
-                        <button type="submit" class="btn btn-sm btn-danger"
-                                onclick="return confirm('Delete this record?')">
-                            Delete
-                        </button>
-                    </form>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+
+<div style="padding:10px 0;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <div>
+            <h2 style="color:#1a2e1f; font-weight:600; font-size:1.5rem; margin-bottom:4px;">Census Records</h2>
+            <p style="color:#4a6352; font-size:14px;">@Model.Count resident(s) registered</p>
+        </div>
+        <a asp-action="Add" style="background:#1B6B2F; color:white; padding:10px 20px; border-radius:8px; text-decoration:none; font-size:14px; font-weight:500;">
+            + Add Resident
+        </a>
+    </div>
+
+    <div style="background:white; border:1px solid #d0e8d5; border-radius:10px; overflow:hidden;">
+        <table style="width:100%; border-collapse:collapse; font-size:13px;">
+            <thead>
+                <tr style="background:#f0f7f2;">
+                    <th style="text-align:left; padding:12px 20px; color:#1B6B2F; font-weight:500;">Name</th>
+                    <th style="text-align:left; padding:12px 20px; color:#1B6B2F; font-weight:500;">Gender</th>
+                    <th style="text-align:left; padding:12px 20px; color:#1B6B2F; font-weight:500;">Civil Status</th>
+                    <th style="text-align:left; padding:12px 20px; color:#1B6B2F; font-weight:500;">Address</th>
+                    <th style="text-align:left; padding:12px 20px; color:#1B6B2F; font-weight:500;">Contact</th>
+                    <th style="text-align:center; padding:12px 20px; color:#1B6B2F; font-weight:500;">Voter</th>
+                    <th style="text-align:center; padding:12px 20px; color:#1B6B2F; font-weight:500;">Senior</th>
+                    <th style="text-align:center; padding:12px 20px; color:#1B6B2F; font-weight:500;">PWD</th>
+                    <th style="text-align:center; padding:12px 20px; color:#1B6B2F; font-weight:500;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var r in Model)
+                {
+                    <tr style="border-top:1px solid #f0f7f2;">
+                        <td style="padding:12px 20px; color:#1a2e1f; font-weight:500;">@r.LastName, @r.FirstName @r.MiddleName</td>
+                        <td style="padding:12px 20px; color:#4a6352;">@r.Gender</td>
+                        <td style="padding:12px 20px; color:#4a6352;">@r.CivilStatus</td>
+                        <td style="padding:12px 20px; color:#4a6352;">@r.Address</td>
+                        <td style="padding:12px 20px; color:#4a6352;">@r.ContactNumber</td>
+                        <td style="padding:12px 20px; text-align:center;">
+                            @if (r.IsVoter)
+                            {
+                                <span style="background:#d4edda; color:#1B6B2F; font-size:11px; padding:3px 10px; border-radius:20px;">Yes</span>
+                            }
+                            else
+                            {
+                                <span style="background:#f1f3f5; color:#6c757d; font-size:11px; padding:3px 10px; border-radius:20px;">No</span>
+                            }
+                        </td>
+                        <td style="padding:12px 20px; text-align:center;">
+                            @if (r.IsSeniorCitizen)
+                            {
+                                <span style="background:#d4edda; color:#1B6B2F; font-size:11px; padding:3px 10px; border-radius:20px;">Yes</span>
+                            }
+                            else
+                            {
+                                <span style="background:#f1f3f5; color:#6c757d; font-size:11px; padding:3px 10px; border-radius:20px;">No</span>
+                            }
+                        </td>
+                        <td style="padding:12px 20px; text-align:center;">
+                            @if (r.IsPWD)
+                            {
+                                <span style="background:#d4edda; color:#1B6B2F; font-size:11px; padding:3px 10px; border-radius:20px;">Yes</span>
+                            }
+                            else
+                            {
+                                <span style="background:#f1f3f5; color:#6c757d; font-size:11px; padding:3px 10px; border-radius:20px;">No</span>
+                            }
+                        </td>
+                        <td style="padding:12px 20px; text-align:center;">
+                            <div style="display:flex; gap:6px; justify-content:center;">
+                                <a asp-action="Edit" asp-route-id="@r.Id"
+                                   style="background:#fff8e1; color:#856404; border:1px solid #ffc107; padding:5px 12px; border-radius:6px; font-size:12px; text-decoration:none;">
+                                    Edit
+                                </a>
+                                <form asp-action="Delete" asp-controller="Residents" method="post" style="display:inline;">
+                                    <input type="hidden" name="id" value="@r.Id" />
+                                    <button type="submit" onclick="return confirm('Delete this record?')"
+                                            style="background:#fff0f0; color:#b91c1c; border:1px solid #f09595; padding:5px 12px; border-radius:6px; font-size:12px; cursor:pointer;">
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

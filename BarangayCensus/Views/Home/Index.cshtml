@@ -1,8 +1,126 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using BarangayCensus.Models.Entities
+@{
+    ViewData["Title"] = User.IsInRole("Admin") ? "Dashboard" : "Welcome";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@if (!User.IsInRole("Admin"))
+{
+    <div style="min-height:90vh; background:#fff; display:flex; align-items:center;">
+        <div style="display:grid; grid-template-columns:1fr 1fr; width:100%; max-width:1100px; margin:0 auto; padding:40px; gap:60px; align-items:center;">
+            <div>
+                <div style="background:#d4edda; color:#1B6B2F; display:inline-block; padding:6px 14px; border-radius:20px; font-size:13px; font-weight:500; margin-bottom:20px;">
+                    Official Barangay System
+                </div>
+                <h1 style="font-size:2.8rem; font-weight:700; color:#1a2e1f; line-height:1.2; margin-bottom:16px;">
+                    Barangay Census <span style="color:#1B6B2F;">Management</span> Portal
+                </h1>
+                <p style="font-size:1.1rem; color:#4a6352; line-height:1.7; margin-bottom:32px;">
+                    A centralized system for managing barangay resident records, tracking demographics, and organizing census data efficiently.
+                </p>
+                <a asp-area="Identity" asp-page="/Account/Login"
+                   style="background:#1B6B2F; color:white; padding:14px 32px; border-radius:8px; text-decoration:none; font-size:15px; font-weight:500;">
+                    Admin Login
+                </a>
+            </div>
+            <div>
+                <div style="background:#f0f7f2; border-radius:16px; padding:32px; border:1px solid #d0e8d5;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div style="background:white; border-radius:10px; padding:20px; text-align:center; border:1px solid #d0e8d5;">
+                            <div style="font-size:2rem; margin-bottom:8px;">👥</div>
+                            <p style="color:#1B6B2F; font-weight:600; font-size:14px;">Resident Records</p>
+                        </div>
+                        <div style="background:white; border-radius:10px; padding:20px; text-align:center; border:1px solid #d0e8d5;">
+                            <div style="font-size:2rem; margin-bottom:8px;">🗳️</div>
+                            <p style="color:#1B6B2F; font-weight:600; font-size:14px;">Voter Tracking</p>
+                        </div>
+                        <div style="background:white; border-radius:10px; padding:20px; text-align:center; border:1px solid #d0e8d5;">
+                            <div style="font-size:2rem; margin-bottom:8px;">♿</div>
+                            <p style="color:#1B6B2F; font-weight:600; font-size:14px;">PWD Registry</p>
+                        </div>
+                        <div style="background:white; border-radius:10px; padding:20px; text-align:center; border:1px solid #d0e8d5;">
+                            <div style="font-size:2rem; margin-bottom:8px;">📊</div>
+                            <p style="color:#1B6B2F; font-weight:600; font-size:14px;">Census Reports</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div style="padding:10px 0;">
+        <div style="margin-bottom:24px;">
+            <h2 style="color:#1a2e1f; font-weight:600; font-size:1.6rem; margin-bottom:4px;">Dashboard</h2>
+            <p style="color:#4a6352; font-size:14px;">Welcome back, Admin. Here's your barangay overview.</p>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:24px;">
+            <div style="background:white; border:1px solid #d0e8d5; border-radius:10px; padding:20px;">
+                <p style="font-size:12px; color:#6c757d; margin-bottom:8px; text-transform:uppercase; letter-spacing:.05em;">Total Residents</p>
+                <p style="font-size:2rem; font-weight:600; color:#1B6B2F; margin-bottom:4px;">@ViewBag.TotalResidents</p>
+                <a asp-controller="Residents" asp-action="List" style="font-size:12px; color:#2E8B57; text-decoration:none;">View all →</a>
+            </div>
+            <div style="background:white; border:1px solid #d0e8d5; border-radius:10px; padding:20px;">
+                <p style="font-size:12px; color:#6c757d; margin-bottom:8px; text-transform:uppercase; letter-spacing:.05em;">Registered Voters</p>
+                <p style="font-size:2rem; font-weight:600; color:#1B6B2F; margin-bottom:4px;">@ViewBag.TotalVoters</p>
+                <p style="font-size:12px; color:#6c757d;">of total residents</p>
+            </div>
+            <div style="background:white; border:1px solid #d0e8d5; border-radius:10px; padding:20px;">
+                <p style="font-size:12px; color:#6c757d; margin-bottom:8px; text-transform:uppercase; letter-spacing:.05em;">Senior Citizens</p>
+                <p style="font-size:2rem; font-weight:600; color:#1B6B2F; margin-bottom:4px;">@ViewBag.TotalSeniors</p>
+                <p style="font-size:12px; color:#6c757d;">60 years and above</p>
+            </div>
+            <div style="background:white; border:1px solid #d0e8d5; border-radius:10px; padding:20px;">
+                <p style="font-size:12px; color:#6c757d; margin-bottom:8px; text-transform:uppercase; letter-spacing:.05em;">PWD Residents</p>
+                <p style="font-size:2rem; font-weight:600; color:#1B6B2F; margin-bottom:4px;">@ViewBag.TotalPWD</p>
+                <p style="font-size:12px; color:#6c757d;">registered PWDs</p>
+            </div>
+        </div>
+
+        <div style="background:white; border:1px solid #d0e8d5; border-radius:10px; overflow:hidden;">
+            <div style="padding:16px 20px; border-bottom:1px solid #d0e8d5; display:flex; justify-content:space-between; align-items:center;">
+                <p style="font-weight:500; color:#1a2e1f; font-size:15px;">Recent Registrations</p>
+                <a asp-controller="Residents" asp-action="List" style="font-size:13px; color:#1B6B2F; text-decoration:none;">View all</a>
+            </div>
+            <table style="width:100%; border-collapse:collapse; font-size:13px;">
+                <thead>
+                    <tr style="background:#f0f7f2;">
+                        <th style="text-align:left; padding:10px 20px; color:#1B6B2F; font-weight:500;">Name</th>
+                        <th style="text-align:left; padding:10px 20px; color:#1B6B2F; font-weight:500;">Gender</th>
+                        <th style="text-align:left; padding:10px 20px; color:#1B6B2F; font-weight:500;">Address</th>
+                        <th style="text-align:left; padding:10px 20px; color:#1B6B2F; font-weight:500;">Voter</th>
+                        <th style="text-align:left; padding:10px 20px; color:#1B6B2F; font-weight:500;">Date Registered</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Resident r in ViewBag.RecentResidents)
+                    {
+                        <tr style="border-bottom:1px solid #f0f7f2;">
+                            <td style="padding:12px 20px; color:#1a2e1f; font-weight:500;">@r.LastName, @r.FirstName</td>
+                            <td style="padding:12px 20px; color:#4a6352;">@r.Gender</td>
+                            <td style="padding:12px 20px; color:#4a6352;">@r.Address</td>
+                            <td style="padding:12px 20px;">
+                                @if (r.IsVoter)
+                                {
+                                    <span style="background:#d4edda; color:#1B6B2F; font-size:11px; padding:3px 10px; border-radius:20px;">Yes</span>
+                                }
+                                else
+                                {
+                                    <span style="background:#f1f3f5; color:#6c757d; font-size:11px; padding:3px 10px; border-radius:20px;">No</span>
+                                }
+                            </td>
+                            <td style="padding:12px 20px; color:#4a6352;">@r.DateRegistered.ToString("MMM dd, yyyy")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div style="padding:14px 20px; border-top:1px solid #d0e8d5; text-align:right;">
+                <a asp-controller="Residents" asp-action="Add"
+                   style="background:#1B6B2F; color:white; padding:9px 20px; border-radius:7px; text-decoration:none; font-size:13px;">
+                    + Add New Resident
+                </a>
+            </div>
+        </div>
+    </div>
+}   
